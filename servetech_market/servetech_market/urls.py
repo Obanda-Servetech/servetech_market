@@ -15,19 +15,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include('api.urls')),
 ]
+from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
-from api.views import CategoryViewSet, ProductViewSet
+from django.http import HttpResponse
 
-router = routers.DefaultRouter()
-router.register(r'categories', CategoryViewSet)
-router.register(r'products', ProductViewSet)
+def home(request):
+    return HttpResponse("Welcome to ServeTech Market API")
 
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path('admin/', admin.site.urls),
+    path('api/', include('api.urls')),
+    path('', home),  # Home view for the root URL
 ]
